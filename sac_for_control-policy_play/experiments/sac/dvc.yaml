@@ -1,0 +1,25 @@
+stages:
+  run_sac_on_model_single_experiment:
+    # Runs "Soft Actor-Critic" algorithm on math model
+    cmd: python sac_run.py -mp data/models/simulated/single_experiment/${sac_params.general_params.model_name} -ohd data/experiment_data/simulated/${sac_params.general_params.model_name} -p params.yaml
+    deps:
+      - sac_run.py
+      - params.yaml
+      - ../../src/libs/
+    outs:
+      - data/experiment_data/${sac_params.general_params.model_name}
+      - data/models/simulated/${sac_params.general_params.model_name}
+    params:
+      - sac_params
+  run_sac_on_model_with_parametric_sweep:
+    cmd: python sac_run_with_param_sweep.py -mp data/models/simulated/sweep_experiment/${sac_params.general_params.model_name} -ohd data/experiment_data/simulated/sweep/${sac_params.general_params.model_name} -p params.yaml
+    deps:
+      - sac_run.py
+      - params.yaml
+      - ../../src/libs/
+    outs:
+      - data/models/simulated/sweep_experiment/${sac_params.general_params.model_name}
+      - data/experiment_data/simulated/sweep/${sac_params.general_params.model_name}
+    params:
+      - sac_params
+      - param_sweep
